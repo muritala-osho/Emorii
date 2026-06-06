@@ -1,0 +1,9 @@
+{
+  "name": "Emorii Admin - Platform Management",
+  "description": "Secure admin dashboard for Emorii dating platform, featuring real-time analytics, AI-moderation, and community management.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

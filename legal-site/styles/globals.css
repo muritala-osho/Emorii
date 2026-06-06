@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #ffffff;
+  color: #111827;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #10B981;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.site-header-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #10B981;
+  letter-spacing: -0.3px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+}
+
+.site-nav a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  transition: color 0.15s;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  color: #10B981;
+  text-decoration: none;
+}
+
+.page-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.doc-header {
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.doc-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.doc-meta span {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.doc-section {
+  margin-bottom: 40px;
+}
+
+.doc-section h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+  padding-top: 8px;
+}
+
+.doc-section p {
+  font-size: 0.9375rem;
+  color: #374151;
+  margin-bottom: 12px;
+}
+
+.doc-section ul {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.doc-section ul li {
+  font-size: 0.9375rem;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.doc-section strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.contact-block {
+  background: #f0fdf9;
+  border: 1px solid #a7f3d0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 8px;
+}
+
+.contact-block p {
+  margin-bottom: 6px;
+  font-size: 0.9375rem;
+  color: #374151;
+}
+
+.contact-block p:last-child {
+  margin-bottom: 0;
+}
+
+.site-footer {
+  border-top: 1px solid #e5e7eb;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.site-footer p {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+}
+
+@media (max-width: 600px) {
+  .doc-title {
+    font-size: 1.5rem;
+  }
+
+  .page-wrapper {
+    padding: 32px 16px 60px;
+  }
+}

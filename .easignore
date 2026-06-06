@@ -1,0 +1,42 @@
+# EAS Build archive exclusions
+# EAS installs dependencies and compiles native code itself on its servers.
+# Keep the archive as small as possible — only source code is needed.
+
+# node_modules — EAS runs npm install itself, never send these
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+admin-dashboard/node_modules/
+
+# Git history — not needed for building
+.git/
+**/.git/
+
+# Native prebuild output — EAS compiles these itself from source
+frontend/android/
+frontend/ios/
+android/
+ios/
+
+# Expo local cache
+frontend/.expo/
+.expo/
+
+# Backend API server (not part of the mobile app)
+backend/
+
+# React/Vite admin dashboard (not part of the mobile app)
+admin-dashboard/
+
+# Replit agent local data
+.local/
+
+# IDE and tool caches
+.cache/
+.config/
+
+# Misc root-level files not needed by Expo
+.snyk
+replit.md
+attached_assets/
+screenshots/

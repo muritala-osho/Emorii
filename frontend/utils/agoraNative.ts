@@ -1,0 +1,10 @@
+export const createAgoraRtcEngine: any = null;
+export const RtcSurfaceView: any = null;
+export const VideoSourceType: any = {};
+export const ChannelProfileType: any = {};
+export const ClientRoleType: any = {};
+export const VideoMirrorModeType: any = {};
+export const RenderModeType: any = {};
+export const OrientationMode: any = {};
+export const DegradationPreference: any = {};
+export const isAgoraAvailable = false;

@@ -1,0 +1,83 @@
+{
+  "name": "emorii-backend",
+  "version": "1.0.0",
+  "description": "Emorii Dating App Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node cluster.js",
+    "dev": "nodemon server.js",
+    "test": "jest --detectOpenHandles",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "snyk:test": "snyk test --severity-threshold=high",
+    "snyk:monitor": "snyk monitor",
+    "snyk:fix": "snyk fix",
+    "security": "snyk test --severity-threshold=medium --json > snyk-report.json || true",
+    "audit:security": "node scripts/security-audit.js",
+    "predeploy": "node scripts/security-audit.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testTimeout": 10000
+  },
+  "keywords": [
+    "dating",
+    "api",
+    "mongodb",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@parse/node-apn": "^8.1.0",
+    "@sendgrid/mail": "^8.1.6",
+    "@sentry/node": "^10.47.0",
+    "@socket.io/redis-adapter": "^8.3.0",
+    "agora-access-token": "^2.0.4",
+    "agora-token": "^2.0.5",
+    "axios": "^1.16.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.8.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "expo-server-sdk": "^4.0.0",
+    "express": "^5.2.1",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^8.5.2",
+    "firebase-admin": "^13.8.0",
+    "helmet": "^8.1.0",
+    "hpp": "^0.2.3",
+    "http-proxy": "^1.18.1",
+    "ioredis": "^5.10.1",
+    "joi": "^18.1.2",
+    "jsonwebtoken": "^9.0.3",
+    "lodash": "^4.18.1",
+    "mongoose": "^8.21.0",
+    "multer": "2.1.1",
+    "node-cron": "^4.2.1",
+    "protobufjs": "^8.0.1",
+    "rate-limit-redis": "^5.0.0",
+    "redis": "^4.7.1",
+    "resend": "^6.1.3",
+    "sharp": "^0.34.5",
+    "socket.io": "^4.8.3",
+    "underscore": "^1.13.8",
+    "web-push": "^3.6.7",
+    "xss": "^1.0.15"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "snyk": "^1.1303.2",
+    "supertest": "^7.1.4"
+  },
+  "overrides": {
+    "@xmldom/xmldom": "0.9.10",
+    "@tootallnate/once": "3.0.1",
+    "uuid": "14.0.0"
+  }
+}

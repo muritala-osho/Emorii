@@ -1,0 +1,28 @@
+⚠️ Detected that your app uses Expo Go for development, this is not recommended when building production apps.
+Learn more: https://expo.fyi/why-not-build-expo-go-for-production
+To suppress this warning, set EAS_BUILD_NO_EXPO_GO_WARNING=true.
+
+Unable to resolve a valid config plugin for ./plugins/withCallKeep.
+• No "app.plugin.js" file found in ./plugins/withCallKeep: config plugins are typically exported from an "app.plugin.js" file in the package root.
+• main export of ./plugins/withCallKeep does not appear to be a config plugin: the following error was thrown when importing /home/runner/workspace/frontend/plugins/withCallKeep.js: Cannot find module '@expo/config-plugins'
+Require stack:
+- /home/runner/workspace/frontend/plugins/withCallKeep.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@expo/config-plugins/build/plugins/withPlugins.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@expo/config-plugins/build/index.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/eas-cli/build/build/android/syncProjectConfiguration.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/eas-cli/build/build/android/build.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/eas-cli/build/build/runBuildAndSubmit.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/eas-cli/build/commands/build/index.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@oclif/core/lib/module-loader.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@oclif/core/lib/help/index.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@oclif/core/lib/errors/handle.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@oclif/core/lib/errors/index.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@oclif/core/lib/config/config.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@oclif/core/lib/config/index.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@oclif/core/lib/command.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/@oclif/core/lib/index.js
+- /home/runner/.npm/_npx/6bc7bae5c2059953/node_modules/eas-cli/bin/run MODULE_NOT_FOUND
+Verify that ./plugins/withCallKeep includes a config plugin. If it does not, then remove the entry from plugins in your app config file. Learn more: https://docs.expo.dev/guides/config-plugins/
+    Error: build command failed.

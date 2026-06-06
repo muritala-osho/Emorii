@@ -1,0 +1,9 @@
+# Snyk (https://snyk.io) policy file
+# This file controls which vulnerabilities Snyk ignores and how it behaves.
+version: v1.25.1
+
+# Ignore specific vulnerabilities that are accepted risks (add entries as needed)
+ignore: {}
+
+# Patch rules — applied when running `snyk protect`
+patch: {}

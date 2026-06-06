@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Environment secrets — NEVER commit these
+.env
+.env.local
+.env.production
+.env.*
+.agents
+
+# Expo / React Native
+.expo/
+dist/
+frontend/.expo/
+frontend/dist/
+frontend/node_modules/
+
+# Firebase config — contains API keys, never commit
+frontend/google-services.json
+frontend/GoogleService-Info.plist
+
+# Sentry — contains auth token, never commit
+frontend/android/sentry.properties
+frontend/ios/sentry.properties
+
+# Backend
+backend/node_modules/
+
+# Admin dashboard
+admin-dashboard/node_modules/
+
+# Build outputs
+*.log
+*.tgz
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Replit
+.replit
+replit.nix
+
+# Snyk security reports
+snyk-report.json
+snyk-backend.sarif
+snyk-frontend.sarif
+*.sarif

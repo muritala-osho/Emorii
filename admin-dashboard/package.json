@@ -1,0 +1,36 @@
+{
+  "name": "emorii-admin-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5000 --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@sentry/react": "^10.50.0",
+    "@vercel/analytics": "^2.0.1",
+    "axios": "^1.16.0",
+    "face-api.js": "^0.22.2",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^6.30.4",
+    "react-router-dom": "^6.28.1",
+    "recharts": "^2.14.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "8.5.10",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.3",
+    "vite": "^6.2.3"
+  },
+  "overrides": {
+    "node-fetch": "^2.6.7"
+  }
+}
