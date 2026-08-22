@@ -1,25 +1,32 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Feather } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import { ThemedText } from '@/components/ThemedText';
-import ProfilePrompts from '@/components/profile/ProfilePrompts';
 import { ScreenScrollView } from '@/components/ScreenScrollView';
 
-export default function ProfilePromptsScreen({ navigation }: any) {
+export default function AddPromptScreen({ navigation }: any) {
   const { theme } = useTheme();
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={[styles.header, { borderBottomColor: theme.border }]}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Feather name="arrow-left" size={24} color={theme.text} />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <ThemedText style={[styles.action, { color: theme.textSecondary }]}>
+            Cancel
+          </ThemedText>
         </TouchableOpacity>
-        <ThemedText style={styles.title}>Profile Prompts</ThemedText>
-        <View style={{ width: 40 }} />
+
+        <ThemedText style={styles.title}>Add Prompt</ThemedText>
+
+        <TouchableOpacity onPress={() => {/* save logic */}}>
+          <ThemedText style={[styles.action, styles.saveAction, { color: theme.primary }]}>
+            Save
+          </ThemedText>
+        </TouchableOpacity>
       </View>
+
       <ScreenScrollView>
-        <ProfilePrompts isOwnProfile={true} />
+        {/* prompt category list goes here */}
       </ScreenScrollView>
     </SafeAreaView>
   );
@@ -37,14 +44,16 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderBottomWidth: 1,
   },
-  backButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   title: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 17,
+    fontWeight: '600',
+  },
+  action: {
+    fontSize: 16,
+    minWidth: 56,
+  },
+  saveAction: {
+    fontWeight: '600',
+    textAlign: 'right',
   },
 });
