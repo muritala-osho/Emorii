@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import { useApi } from '@/hooks/useApi';
@@ -339,7 +340,10 @@ export default function ProfilePrompts({ userId, isOwnProfile = false, onRespons
         presentationStyle="fullScreen"
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={[styles.modalContainer, { backgroundColor: theme.background }]}>
+        <SafeAreaView
+          style={[styles.modalContainer, { backgroundColor: theme.background }]}
+          edges={['top', 'bottom']}
+        >
           <View style={styles.modalHeader}>
             <TouchableOpacity onPress={() => setModalVisible(false)}>
               <Text style={[styles.cancelText, { color: theme.textSecondary }]}>Cancel</Text>
@@ -402,7 +406,7 @@ export default function ProfilePrompts({ userId, isOwnProfile = false, onRespons
               </Text>
             </View>
           )}
-        </View>
+        </SafeAreaView>
       </Modal>
     </View>
   );
@@ -520,7 +524,7 @@ const styles = StyleSheet.create({
   },
   promptsList: {
     paddingHorizontal: 16,
-    paddingTop: 12,
+    paddingTop: 20,
     paddingBottom: 24,
   },
   promptOption: {
