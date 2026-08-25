@@ -362,21 +362,31 @@ router.post('/validate-receipt', protect, async (req, res) => {
     if (existingLog) {
       logger.log(`[IAP] Duplicate validate-receipt ignored for user ${user._id} (${platform})`);
     } else {
-      await PurchaseLog.withTransaction(async (session) => {
-        await User.findByIdAndUpdate(user._id, update, session ? { session } : {});
-        await PurchaseLog.create([{
-          userId: user._id,
-          platform,
-          productId,
-          eventType: 'PURCHASE',
-          idempotencyKey: idemKey,
-          originalTransactionId: update['premium.originalTransactionId'],
-          purchaseToken: update['premium.purchaseToken'],
-          expiresAt,
-          environment: update['premium.environment'],
-        }], { session });
-      });
-      logger.log(`Premium activated for user ${user._id} via ${platform} in-app purchase`);
+      try {
+        await PurchaseLog.withTransaction(async (session) => {
+          await User.findByIdAndUpdate(user._id, update, session ? { session } : {});
+          await PurchaseLog.create([{
+            userId: user._id,
+            platform,
+            productId,
+            eventType: 'PURCHASE',
+            idempotencyKey: idemKey,
+            originalTransactionId: update['premium.originalTransactionId'],
+            purchaseToken: update['premium.purchaseToken'],
+            expiresAt,
+            environment: update['premium.environment'],
+          }], { session });
+        });
+        logger.log(`Premium activated for user ${user._id} via ${platform} in-app purchase`);
+      } catch (error) {
+        // Two client listeners can receive the same purchase concurrently.
+        // The unique index is the final idempotency guard; a duplicate means
+        // the other request already processed this purchase successfully.
+        if (error?.code !== 11000 || error?.keyPattern?.idempotencyKey !== 1) {
+          throw error;
+        }
+        logger.log(`[IAP] Concurrent duplicate validation treated as success: ${idemKey}`);
+      }
     }
 
     sendPremiumConfirmationEmail(user.email, user.firstName || user.name || 'there', interval, expiresAt).catch(() => {});
@@ -504,20 +514,27 @@ router.post('/restore-purchases', protect, async (req, res) => {
 
     const existingRestore = await PurchaseLog.findOne({ idempotencyKey: restoreIdemKey });
     if (!existingRestore) {
-      await PurchaseLog.withTransaction(async (session) => {
-        await User.findByIdAndUpdate(user._id, restoreUpdate, session ? { session } : {});
-        await PurchaseLog.create([{
-          userId: user._id,
-          platform,
-          productId: resolvedProductId,
-          eventType: 'RESTORE',
-          idempotencyKey: restoreIdemKey,
-          originalTransactionId: restoreUpdate['premium.originalTransactionId'],
-          purchaseToken: restoreUpdate['premium.purchaseToken'],
-          expiresAt: restoreExpiresAt,
-          environment: restoreUpdate['premium.environment'],
-        }], { session });
-      });
+      try {
+        await PurchaseLog.withTransaction(async (session) => {
+          await User.findByIdAndUpdate(user._id, restoreUpdate, session ? { session } : {});
+          await PurchaseLog.create([{
+            userId: user._id,
+            platform,
+            productId: resolvedProductId,
+            eventType: 'RESTORE',
+            idempotencyKey: restoreIdemKey,
+            originalTransactionId: restoreUpdate['premium.originalTransactionId'],
+            purchaseToken: restoreUpdate['premium.purchaseToken'],
+            expiresAt: restoreExpiresAt,
+            environment: restoreUpdate['premium.environment'],
+          }], { session });
+        });
+      } catch (error) {
+        if (error?.code !== 11000 || error?.keyPattern?.idempotencyKey !== 1) {
+          throw error;
+        }
+        logger.log(`[IAP Restore] Concurrent duplicate restore treated as success: ${restoreIdemKey}`);
+      }
     }
 
     logger.log(`[IAP Restore] Premium restored for user ${user._id} via ${platform}`);
