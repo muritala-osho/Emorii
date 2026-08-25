@@ -40,6 +40,7 @@ let asyncStorageModule: any = null;
 let isIAPAvailable = false;
 let cachedSubscriptions: any[] = [];
 let cachedPrices: Record<string, NormalizedPrice> = {};
+const entitlementListeners = new Set<() => void>();
 
 const getAsyncStorage = async () => {
   if (asyncStorageModule) return asyncStorageModule;
@@ -257,6 +258,11 @@ const getPurchaseToken = (purchase: any): string | null => {
   return typeof token === 'string' && token.length > 0 ? token : null;
 };
 
+const isPendingPurchase = (purchase: any): boolean => {
+  // Google Billing uses 2 for PENDING and 1 for PURCHASED.
+  return Platform.OS === 'android' && Number(purchase?.purchaseStateAndroid) === 2;
+};
+
 const getPurchaseHistory = async () => {
   if (!isIAPAvailable || !iapModule) return [];
   try {
@@ -269,11 +275,9 @@ const getPurchaseHistory = async () => {
 
 const finishTransaction = async (purchase: any, isConsumable = false) => {
   if (!isIAPAvailable || !iapModule) return;
-  try {
-    await iapModule.finishTransaction({ purchase, isConsumable });
-  } catch (error) {
-    logger.log('Failed to finish transaction:', error);
-  }
+  // Do not swallow this error. If acknowledgement fails, the caller must
+  // leave the purchase pending so it can be retried before Google refunds it.
+  await iapModule.finishTransaction({ purchase, isConsumable });
 };
 
 const endConnection = () => {
@@ -299,6 +303,15 @@ const addErrorListener = (callback: (error: any) => void) => {
   if (!isIAPAvailable || !iapModule) return () => {};
   const subscription = iapModule.purchaseErrorListener(callback);
   return () => subscription.remove();
+};
+
+const addEntitlementListener = (callback: () => void) => {
+  entitlementListeners.add(callback);
+  return () => entitlementListeners.delete(callback);
+};
+
+const notifyEntitlementUpdated = () => {
+  entitlementListeners.forEach((callback) => callback());
 };
 
 const restorePurchases = async (): Promise<{ receipt: string | null; productId: string | null }> => {
@@ -332,12 +345,15 @@ export const iapService = {
   requestSubscription,
   getPurchaseProductId,
   getPurchaseToken,
+  isPendingPurchase,
   getPurchaseHistory,
   restorePurchases,
   finishTransaction,
   endConnection,
   addPurchaseListener,
   addErrorListener,
+  addEntitlementListener,
+  notifyEntitlementUpdated,
   get isAvailable() {
     return isIAPAvailable;
   },

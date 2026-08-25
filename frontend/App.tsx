@@ -394,23 +394,31 @@ function AppContent() {
   // The backend's idempotency key prevents double-crediting when
   // PremiumScreen's own listener also fires for the same purchase.
   useEffect(() => {
-    if (!user?.id || !token || Platform.OS === 'web') return;
+    if (!user?.id || Platform.OS === 'web') return;
 
     let removePurchase: (() => void) | null = null;
     let removeError: (() => void) | null = null;
+    const inFlightTokens = new Set<string>();
 
     const setupGlobalIAPListener = async () => {
       const available = await iapService.loadIAP();
       if (!available) return;
 
-      removePurchase = iapService.addPurchaseListener(async (purchase: any) => {
+      const processPurchase = async (purchase: any) => {
         const productId = iapService.getPurchaseProductId(purchase);
         const receipt = Platform.OS === 'ios'
           ? purchase.transactionReceipt
           : iapService.getPurchaseToken(purchase);
         if (!receipt || !productId) return;
+        if (iapService.isPendingPurchase(purchase)) {
+          logger.log('[App] IAP purchase pending; waiting for Google confirmation');
+          return;
+        }
+        const purchaseKey = Platform.OS === 'android' ? receipt : `${productId}:${receipt}`;
+        if (inFlightTokens.has(purchaseKey)) return;
+        inFlightTokens.add(purchaseKey);
         try {
-          const authToken = token || await (await import('@/utils/tokenManager')).tokenManager.getAccessToken();
+          const authToken = await tokenManager.getAccessToken();
           if (!authToken) return;
           const res = await fetch(`${getApiBaseUrl()}/api/subscription/validate-receipt`, {
             method: 'POST',
@@ -424,12 +432,30 @@ function AppContent() {
           const json = await res.json();
           if (json.success) {
             await iapService.finishTransaction(purchase);
+            iapService.notifyEntitlementUpdated();
             logger.log('[App] Global IAP listener: purchase validated and finished');
+          } else {
+            logger.warn('[App] IAP purchase validation rejected:', json.message || res.status);
           }
         } catch (err) {
-          logger.warn('[App] Global IAP listener: validation failed', err);
+          logger.warn('[App] IAP purchase processing failed; leaving it retryable:', err);
+        } finally {
+          inFlightTokens.delete(purchaseKey);
         }
-      });
+      };
+
+      removePurchase = iapService.addPurchaseListener(processPurchase);
+
+      // Reconcile purchases delivered while the app was closed or offline.
+      // Available purchases are sent through the same server-validation path.
+      try {
+        const existingPurchases = await iapService.getPurchaseHistory();
+        for (const purchase of existingPurchases) {
+          await processPurchase(purchase);
+        }
+      } catch (err) {
+        logger.warn('[App] Existing IAP reconciliation failed:', err);
+      }
 
       removeError = iapService.addErrorListener((error: any) => {
         if (error?.code !== 'E_USER_CANCELLED') {
@@ -443,8 +469,10 @@ function AppContent() {
     return () => {
       removePurchase?.();
       removeError?.();
+      inFlightTokens.clear();
+      iapService.endConnection();
     };
-  }, [user?.id, token]);
+  }, [user?.id]);
 
   // Initialize notifications when user is authenticated
   useEffect(() => {

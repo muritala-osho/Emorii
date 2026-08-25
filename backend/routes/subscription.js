@@ -166,8 +166,16 @@ async function validateGoogleReceipt(purchaseToken, productId) {
     });
 
     const purchase = verifyRes.data;
+    // Google paymentState=1 means paid and 2 means free trial. Neither
+    // payment state is sufficient by itself: the entitlement must also have
+    // a future expiry. A canceled subscription can still be valid until this
+    // expiry, so cancelReason is intentionally not treated as revocation.
     if (purchase.paymentState !== 1 && purchase.paymentState !== 2) {
       return { valid: false, error: `Google paymentState=${purchase.paymentState}` };
+    }
+    const expiryTimeMillis = Number(purchase.expiryTimeMillis);
+    if (!Number.isFinite(expiryTimeMillis) || expiryTimeMillis <= Date.now()) {
+      return { valid: false, error: 'Google subscription is expired' };
     }
     return { valid: true, data: purchase };
   } catch (err) {

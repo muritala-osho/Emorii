@@ -1,5 +1,5 @@
 import logger from '@/utils/logger';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -79,8 +79,6 @@ export default function PremiumScreen({ navigation }: any) {
   const [pricesLoading, setPricesLoading] = useState(true);
   const [pricesError, setPricesError] = useState(false);
   const [pricesFromStore, setPricesFromStore] = useState(false);
-  const purchaseListenerCleanupRef = useRef<(() => void) | null>(null);
-  const purchaseErrorCleanupRef = useRef<(() => void) | null>(null);
 
   const cardScale = useSharedValue(1);
   const glowOpacity = useSharedValue(0.5);
@@ -102,12 +100,13 @@ export default function PremiumScreen({ navigation }: any) {
   useEffect(() => {
     checkSubscriptionStatus();
     initIAP();
+    const removeEntitlementListener = iapService.addEntitlementListener(() => {
+      setIsActive(true);
+      setProcessing(false);
+      Alert.alert('Welcome to Premium!', 'Your subscription is now active. Enjoy all the premium features!');
+    });
     return () => {
-      purchaseListenerCleanupRef.current?.();
-      purchaseErrorCleanupRef.current?.();
-      purchaseListenerCleanupRef.current = null;
-      purchaseErrorCleanupRef.current = null;
-      iapService.endConnection();
+      removeEntitlementListener();
     };
   }, [token]);
 
@@ -176,51 +175,6 @@ export default function PremiumScreen({ navigation }: any) {
         setPricesLoading(false);
       }
 
-      purchaseListenerCleanupRef.current?.();
-      purchaseErrorCleanupRef.current?.();
-
-      const removePurchaseListener = iapService.addPurchaseListener(async (purchase: any) => {
-        const productId = iapService.getPurchaseProductId(purchase);
-        const receipt = Platform.OS === 'ios'
-          ? purchase.transactionReceipt
-          : iapService.getPurchaseToken(purchase);
-        if (receipt && productId && token) {
-          try {
-            const response = await post<{ subscription?: any }>(
-              '/subscription/validate-receipt',
-              {
-                platform: Platform.OS === 'ios' ? 'ios' : 'android',
-                receipt,
-                productId,
-              },
-              token
-            );
-            if (response.success) {
-              setIsActive(true);
-              await iapService.finishTransaction(purchase);
-              Alert.alert('Welcome to Premium!', 'Your subscription is now active. Enjoy all the premium features!');
-            } else {
-              Alert.alert(
-                'Purchase Verification Failed',
-                response.message || 'Google Play could not verify this purchase. Please try again.',
-              );
-            }
-          } catch (error) {
-            logger.log('Receipt validation failed:', error);
-            Alert.alert('Purchase Verification Failed', 'The purchase was received but could not be verified. Please try again.');
-          }
-        }
-        setProcessing(false);
-      });
-
-      const removeErrorListener = iapService.addErrorListener((error: any) => {
-        if (error.code !== 'E_USER_CANCELLED') {
-          Alert.alert('Purchase Error', 'Something went wrong. Please try again.');
-        }
-        setProcessing(false);
-      });
-      purchaseListenerCleanupRef.current = removePurchaseListener;
-      purchaseErrorCleanupRef.current = removeErrorListener;
     }
   };
 
