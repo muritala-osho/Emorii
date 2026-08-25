@@ -1,0 +1,273 @@
+I need you to thoroughly audit and fix the Premium subscription / In-App Purchase (IAP) system in this dating app.
+
+IMPORTANT CONTEXT:
+- This is an Expo React Native Android app.
+- The app is currently being tested through Google Play Console Internal Testing.
+- Premium subscriptions are configured in Google Play Console.
+- I am using Google Play test purchases.
+- Current bug: when I make a test purchase, Google Play says the payment/purchase is successful and the app unlocks Premium, but shortly afterward the Premium entitlement disappears / the purchase appears cancelled.
+- Do NOT simply modify the UI to keep Premium enabled. Find and fix the actual purchase lifecycle and entitlement logic.
+
+YOUR TASK:
+
+1. AUDIT THE ENTIRE IAP IMPLEMENTATION
+Inspect the entire repository and identify:
+- Which IAP/subscription library is being used.
+- How the Google Play purchase is initiated.
+- How purchase results are received.
+- How purchase states are handled.
+- How purchases are acknowledged/finished.
+- How subscriptions are restored.
+- How Premium status is stored locally.
+- How Premium status is stored on the backend/database.
+- How the app checks Premium status when launching.
+- How expiration/cancellation is detected.
+- Any webhook/server-side purchase validation if present.
+- Any race conditions between local Premium state and backend Premium state.
+
+Do not assume the current implementation is correct.
+
+2. GOOGLE PLAY PURCHASE STATES
+Make sure the implementation correctly distinguishes:
+- PURCHASED
+- PENDING
+- CANCELED
+- EXPIRED
+- REVOKED
+- RESTORED
+
+A successful PURCHASED state must NOT be treated as canceled.
+
+Do not remove Premium simply because:
+- the app restarts,
+- the purchase callback fires again,
+- the purchase is acknowledged,
+- the purchase is consumed/finished,
+- the subscription is renewed,
+- the local cache is cleared,
+- the user temporarily has no network connection.
+
+For subscriptions, understand that cancellation normally means the user has disabled future renewal; it does NOT necessarily mean their current Premium entitlement should immediately disappear. Premium should normally remain active until the actual expiry time unless Google Play reports that the entitlement has been revoked/refunded/etc.
+
+3. PURCHASE ACKNOWLEDGEMENT
+Verify that successful Google Play purchases are correctly acknowledged/finished according to the IAP library being used.
+
+Do not acknowledge a purchase before the app has safely processed it.
+
+Make the purchase handling idempotent so the same Google Play purchase can be processed multiple times without creating duplicate records or incorrectly removing Premium.
+
+4. SERVER-SIDE ENTITLEMENT
+If the app has a backend, make the backend the source of truth for Premium entitlement wherever possible.
+
+Create/verify a reliable subscription record containing information such as:
+- userId
+- Google Play purchase token
+- product/subscription ID
+- purchase state
+- purchase time
+- expiry time
+- auto-renew status
+- cancellation/revocation status
+- environment/test status where available
+
+Never blindly trust a local boolean such as:
+premium = true
+
+The app should retrieve/refresh the user's actual entitlement when necessary.
+
+5. RESTORE PURCHASES
+Implement reliable restoration of purchases.
+
+When a user:
+- logs out and logs back in,
+- reinstalls the app,
+- changes device,
+- clears app data,
+- opens the app again,
+
+the app should query Google Play for existing purchases/subscriptions and restore Premium when the user is legitimately entitled to it.
+
+Do not create a second subscription if an existing subscription already exists.
+
+6. PREMIUM EXPIRATION
+Implement proper expiration handling.
+
+For a subscription:
+- Active subscription → Premium ON
+- Canceled but still within paid period → Premium remains ON
+- Expired subscription → Premium OFF
+- Revoked/refunded subscription → Premium OFF
+- Pending purchase → Premium should NOT be permanently granted until Google confirms the purchase
+- Failed/canceled purchase → Premium OFF
+
+Use the actual entitlement/expiry information rather than simply checking whether the user previously purchased something.
+
+7. PURCHASE TOKEN HANDLING
+Google Play purchase tokens must be handled securely and consistently.
+
+Check for:
+- duplicate purchase tokens
+- old purchase tokens
+- replacement/upgraded subscriptions
+- restored subscriptions
+- token mismatch between local user and backend user
+
+Do not accidentally overwrite a valid active subscription with an older or invalid purchase.
+
+8. APP STARTUP
+Audit what happens when the app launches.
+
+The current bug may be caused by this sequence:
+
+Purchase succeeds
+→ Premium = true
+→ app refreshes user profile
+→ backend/local profile still says Premium = false
+→ app overwrites Premium = false
+
+Find and fix any race condition like this.
+
+Premium entitlement should not briefly unlock and then disappear because another API response overwrites the state.
+
+9. NETWORK FAILURE
+If the user has a valid active Premium subscription but the backend/API temporarily fails, do not immediately downgrade them to free.
+
+Handle loading/unknown entitlement states separately from an actual inactive subscription.
+
+For example:
+
+UNKNOWN / CHECKING
+ACTIVE
+EXPIRED
+REVOKED
+
+Do NOT treat:
+UNKNOWN
+as:
+NOT PREMIUM
+
+10. GOOGLE PLAY CONFIGURATION AUDIT
+Check the code for:
+- package/application ID
+- product IDs
+- subscription IDs
+- Android configuration
+- Expo/EAS configuration
+- environment variables
+- API endpoints
+- Google Play product identifiers
+
+Make sure the product ID used by the app exactly matches the product/subscription configured in Google Play Console.
+
+Do not change product IDs blindly. Report mismatches before changing them.
+
+11. TESTING
+Create a comprehensive test checklist and automated/unit tests where practical.
+
+Test at minimum:
+
+A. Fresh user
+- Open app
+- View Premium
+- Start purchase
+- Complete Google Play test purchase
+- Verify Premium unlocks
+
+B. After purchase
+- Close app
+- Reopen
+- Premium remains active
+
+C. Restore
+- Log out
+- Log back in
+- Premium restores correctly
+
+D. Reinstall
+- Reinstall app
+- Login
+- Existing subscription restores
+
+E. Pending purchase
+- Premium does not permanently unlock until purchase becomes PURCHASED
+
+F. Cancellation
+- Cancel subscription renewal in Google Play
+- Premium remains active until actual expiry
+- Premium becomes inactive only when entitlement actually expires/revokes
+
+G. Duplicate callback
+- Simulate receiving the same purchase callback multiple times
+- Premium should remain correct
+- No duplicate subscription records
+
+H. Network failure
+- Purchase succeeds
+- Temporarily disconnect network
+- App should not incorrectly remove Premium
+
+I. Backend refresh
+- Verify that refreshing the user profile cannot overwrite a valid Premium entitlement with stale data.
+
+12. LOGGING
+Add useful development logging around the purchase lifecycle.
+
+Log:
+- purchase event received
+- product ID
+- purchase state
+- purchase token presence (DO NOT log sensitive information in production)
+- acknowledgement/finish result
+- backend entitlement update
+- restore result
+- entitlement expiry
+- cancellation/revocation state
+
+Do not expose sensitive payment information.
+
+13. UI
+The Premium UI should clearly show:
+- checking subscription status
+- active Premium
+- purchase in progress
+- pending purchase
+- purchase failed
+- subscription expired
+- subscription canceled but still active
+
+Do not show "Premium active" permanently just because the user previously clicked the purchase button.
+
+14. IMPORTANT SECURITY RULE
+Do not implement a client-side bypass such as:
+if purchase button clicked -> premium = true
+
+Premium must only be granted after a legitimate successful purchase/entitlement has been verified.
+
+15. BEFORE MODIFYING CODE
+First inspect the repository and explain:
+- current IAP architecture
+- current purchase flow
+- likely cause(s) of Premium being removed after successful test purchase
+- exact files involved
+- recommended fix
+
+Then implement the fix.
+
+After implementation:
+- run/build the relevant tests
+- check for TypeScript/JavaScript errors
+- check Android/Expo compatibility
+- verify there are no duplicate purchase listeners
+- verify purchase listeners are properly cleaned up
+- verify the purchase flow works correctly after app restart
+
+Do not rewrite unrelated parts of the application.
+
+FINAL OUTPUT:
+Give me:
+1. Root cause of the Premium cancellation/unlock bug.
+2. Files changed.
+3. What was fixed.
+4. How the new purchase lifecycle works.
+5. Any Google Play Console configuration I still need to check manually.
+6. Exact steps I should follow in Google Play Internal Testing to verify the fix.
