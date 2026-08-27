@@ -20,6 +20,7 @@ export default function TermsOfService() {
           <nav className="site-nav">
             <Link href="/privacy" className={router.pathname === '/privacy' ? 'active' : ''}>Privacy Policy</Link>
             <Link href="/terms" className={router.pathname === '/terms' ? 'active' : ''}>Terms of Service</Link>
+            <Link href="/delete-account" className={router.pathname === '/delete-account' ? 'active' : ''}>Delete Account</Link>
           </nav>
         </div>
       </header>

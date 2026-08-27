@@ -134,6 +134,17 @@ a:hover {
   margin-bottom: 6px;
 }
 
+.doc-section ol {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.doc-section ol li {
+  font-size: 0.9375rem;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
 .doc-section strong {
   color: #111827;
   font-weight: 600;
