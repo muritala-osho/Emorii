@@ -28,22 +28,13 @@
  * This plugin upserts the entry explicitly so the correct attributes are always
  * present regardless of plugin execution order.
  *
- * SERVICE TYPES USED
+ * SERVICE TYPE USED
  * ──────────────────
- * We declare: phoneCall|dataSync|mediaPlayback|remoteMessaging
+ * We declare only: phoneCall
  *   • phoneCall        — incoming call foreground service (Answer/Decline overlay)
- *   • dataSync         — AsyncStorage writes during headless JS context
- *   • mediaPlayback    — ringtone playback while call notification is ringing
- *   • remoteMessaging  — FCM message processing foreground service (Android 14)
  *
- * Each type requires the matching FOREGROUND_SERVICE_* permission in the
- * manifest.  Those permissions are declared in app.json → android.permissions:
- *   FOREGROUND_SERVICE_PHONE_CALL   — for phoneCall type
- *   FOREGROUND_SERVICE_DATA_SYNC    — for dataSync type
- *   FOREGROUND_SERVICE_MEDIA_PLAYBACK — for mediaPlayback type
- *   FOREGROUND_SERVICE_REMOTE_MESSAGING — for remoteMessaging type (Android 14)
- * All four are present in app.json. Missing FOREGROUND_SERVICE_REMOTE_MESSAGING
- * was the primary cause of silent killed-state failures on Android 14+ devices.
+ * The matching FOREGROUND_SERVICE_PHONE_CALL permission is declared in
+ * app.json → android.permissions.
  *
  * IDEMPOTENCE
  * ────────────
@@ -56,11 +47,8 @@ const { withAndroidManifest } = require('@expo/config-plugins');
 
 const NOTIFEE_SERVICE = 'app.notifee.core.ForegroundService';
 
-// All foreground service types Notifee may use.
-// Declaring all of them means a single build works for call, chat, and media
-// use-cases without having to bump this list each time a new feature is added.
-const FOREGROUND_SERVICE_TYPES =
-  'phoneCall|dataSync|mediaPlayback|remoteMessaging';
+// Only the phone-call foreground service is used by this app.
+const FOREGROUND_SERVICE_TYPES = 'phoneCall';
 
 function withNotifeeManifest(config) {
   return withAndroidManifest(config, (config) => {
