@@ -145,7 +145,8 @@
       "expo-font",
       "expo-image",
       "expo-sharing",
-      "expo-video"
+      "expo-video",
+      "./plugins/withForegroundServicePermissions"
     ],
     "experiments": {
       "reactCompiler": false
