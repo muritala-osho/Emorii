@@ -74,6 +74,12 @@
         "android.permission.READ_PHONE_NUMBERS",
         "android.permission.BIND_TELECOM_CONNECTION_SERVICE",
         "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+      ],
+      "blockedPermissions": [
+        "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION",
+        "android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING"
       ]
     },
     "web": {
