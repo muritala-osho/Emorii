@@ -91,6 +91,7 @@
       "./plugins/withAndroidRingtone",
       "./plugins/withIncomingCallUI",
       "./plugins/withProguardRules",
+      "./plugins/withAgoraScreenSharingExcluded",
       [
         "expo-splash-screen",
         {
