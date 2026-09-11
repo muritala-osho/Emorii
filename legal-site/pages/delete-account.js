@@ -27,6 +27,9 @@ export default function DeleteAccount() {
             <Link href="/terms" className={router.pathname === '/terms' ? 'active' : ''}>
               Terms of Service
             </Link>
+            <Link href="/child-safety" className={router.pathname === '/child-safety' ? 'active' : ''}>
+              Child Safety
+            </Link>
             <Link
               href="/delete-account"
               className={router.pathname === '/delete-account' ? 'active' : ''}
