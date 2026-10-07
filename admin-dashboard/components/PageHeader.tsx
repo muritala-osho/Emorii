@@ -12,18 +12,18 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle, actions, badge
   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div className="min-w-0">
       {eyebrow && (
-        <p className="text-[9px] font-black text-teal-500 dark:text-teal-400 uppercase tracking-[0.25em] mb-1.5">
+        <p className="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase tracking-[0.16em] mb-2">
           {eyebrow}
         </p>
       )}
       <div className="flex items-center gap-3 flex-wrap">
-        <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none">
+        <h1 className="text-2xl md:text-[28px] font-bold text-gray-900 dark:text-white tracking-tight leading-tight">
           {title}
         </h1>
         {badge}
       </div>
       {subtitle && (
-        <p className="text-sm text-gray-500 dark:text-slate-400 font-medium mt-1.5 leading-snug">
+        <p className="text-sm text-gray-600 dark:text-slate-300 font-medium mt-2 leading-snug">
           {subtitle}
         </p>
       )}

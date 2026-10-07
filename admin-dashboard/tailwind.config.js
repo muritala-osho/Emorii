@@ -13,21 +13,22 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        sans: ['DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
         brand: {
-          300: '#5EEAD4',
-          400: '#2DD4BF',
-          500: '#14B8A6',
-          600: '#0D9488',
-          700: '#0F766E',
-          800: '#115E59',
-          900: '#134E4A',
+          300: '#6EE7B7',
+          400: '#34D399',
+          500: '#10B981',
+          600: '#059669',
+          700: '#047857',
+          800: '#065F46',
+          900: '#064E3B',
         },
       },
       animation: {
-        shimmer:      'shimmer 1.4s ease-in-out infinite',
+        shimmer:      'skeletonPulse 1.4s ease-in-out infinite',
         badgePop:     'badgePop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both',
         toastIn:      'toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both',
         scaleIn:      'scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both',
@@ -35,9 +36,9 @@ export default {
         fadeIn:       'fadeIn 0.2s ease-out both',
       },
       keyframes: {
-        shimmer: {
-          '0%':   { backgroundPosition: '-400px 0' },
-          '100%': { backgroundPosition: '400px 0' },
+        skeletonPulse: {
+          '0%, 100%': { opacity: '.72' },
+          '50%': { opacity: '1' },
         },
         badgePop: {
           '0%':   { transform: 'scale(0)' },

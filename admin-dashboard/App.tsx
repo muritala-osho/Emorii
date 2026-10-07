@@ -353,12 +353,9 @@ const App: React.FC = () => {
 
   if (!auth.isAuthenticated) {
     return (
-      <div className="min-h-screen flex transition-colors duration-300">
+      <div className="min-h-[100dvh] flex transition-colors duration-300">
         {/* ── Left brand panel (desktop only) ── */}
-        <div className="hidden lg:flex flex-col w-[420px] xl:w-[460px] shrink-0 bg-gradient-to-br from-[#082622] via-[#0d3d38] to-[#0f4c45] relative overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '36px 36px' }} />
-          <div className="absolute -top-32 -right-32 w-[420px] h-[420px] bg-teal-400/10 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-[320px] h-[320px] bg-cyan-300/8 rounded-full blur-[80px] pointer-events-none" />
+        <div className="hidden lg:flex flex-col w-[420px] xl:w-[460px] shrink-0 bg-[#102C2A] relative overflow-hidden">
 
           <div className="relative z-10 flex flex-col h-full p-10">
             <div className="flex items-center gap-3">
@@ -371,7 +368,7 @@ const App: React.FC = () => {
             <div className="my-auto py-12">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-teal-400/10 border border-teal-400/15 rounded-full mb-8">
                 <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[9px] font-black text-teal-300/80 uppercase tracking-[0.18em]">All systems operational</span>
+                <span className="text-[9px] font-black text-teal-300/80 uppercase tracking-[0.18em]">Internal operations</span>
               </div>
               <h1 className="text-[42px] xl:text-[48px] font-black text-white leading-[1.05] tracking-tight mb-5">
                 Staff<br />Command<br /><span className="text-teal-300">Center</span>
@@ -383,13 +380,13 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-3 gap-2.5">
               {[
-                { label: 'JWT Auth',    icon: '🔐' },
-                { label: 'Role-Based',  icon: '🛡️' },
-                { label: 'Encrypted',   icon: '🔒' },
+                { label: 'Staff Access' },
+                { label: 'Role Scoped' },
+                { label: 'Session Managed' },
               ].map(item => (
                 <div key={item.label} className="bg-white/[0.04] border border-white/[0.07] rounded-xl p-3 text-center">
-                  <div className="text-lg mb-1.5">{item.icon}</div>
-                  <div className="text-[8px] font-black text-teal-300/50 uppercase tracking-widest">{item.label}</div>
+                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 mx-auto mb-2" aria-hidden="true" />
+                  <div className="text-[10px] font-bold text-emerald-100/75 uppercase tracking-wide">{item.label}</div>
                 </div>
               ))}
             </div>
@@ -398,7 +395,7 @@ const App: React.FC = () => {
 
         {/* ── Right form panel ── */}
         <div className="flex-1 flex flex-col items-center justify-center bg-white dark:bg-slate-950 p-8 relative overflow-hidden">
-          <div className="absolute inset-0 lg:hidden bg-gradient-to-br from-teal-50/60 to-white dark:from-slate-950 dark:to-slate-900 pointer-events-none" />
+          <div className="absolute inset-0 lg:hidden bg-emerald-50/70 dark:bg-slate-950 pointer-events-none" />
 
           <button
             onClick={toggleTheme}
@@ -494,7 +491,7 @@ const App: React.FC = () => {
 
             <div className="mt-8 pt-6 border-t border-gray-100 dark:border-slate-800 flex items-center justify-center gap-2">
               <ShieldCheck size={11} className="text-teal-500/50" />
-              <span className="text-[11px] text-gray-300 dark:text-slate-600 font-medium">JWT Protected · Role-Based Access · Admin Only</span>
+              <span className="text-xs text-gray-500 dark:text-slate-400 font-medium">Staff access · Role-scoped workspace</span>
             </div>
           </div>
         </div>
@@ -508,7 +505,7 @@ const App: React.FC = () => {
 
   return (
     <AuthProvider auth={auth}>
-      <div className="flex h-screen bg-gray-50 dark:bg-slate-950 overflow-hidden transition-colors duration-300">
+      <div className="flex h-[100dvh] bg-[#F5F8FC] dark:bg-[#0D1117] overflow-hidden transition-colors duration-300">
         <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -644,7 +641,9 @@ const App: React.FC = () => {
 
                 {!ALL_TABS.includes(activeTab) && (
                   <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-12 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 animate-fadeIn">
-                    <div className="h-14 w-14 rounded-2xl bg-gray-50 dark:bg-slate-800 flex items-center justify-center mx-auto mb-5 text-2xl">🔍</div>
+                    <div className="h-14 w-14 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-5">
+                      <Search size={24} aria-hidden="true" />
+                    </div>
                     <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2">Module not found</h3>
                     <p className="text-sm text-gray-400 dark:text-slate-500 mb-8">This section is under development.</p>
                     <button

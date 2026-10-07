@@ -193,7 +193,7 @@ const PremiumMembers: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowGrant(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl text-sm font-bold hover:opacity-90 transition-all shadow-sm"
+            className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-bold hover:bg-emerald-700 transition-all"
           >
             <Gift size={15} />
             Grant Free Premium
@@ -646,7 +646,7 @@ const GrantPremiumModal: React.FC<{
       >
         <div className="p-5 border-b border-gray-100 dark:border-slate-800 flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white">
+            <div className="p-2.5 rounded-xl bg-emerald-600 text-white">
               <Gift size={18} />
             </div>
             <div>
@@ -797,7 +797,7 @@ const GrantPremiumModal: React.FC<{
           <button
             onClick={submit}
             disabled={!picked || submitting || !duration}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white disabled:opacity-50 hover:opacity-90"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 text-white disabled:opacity-50 hover:bg-emerald-700"
           >
             {submitting ? <Loader2 size={14} className="animate-spin" /> : <Gift size={14} />}
             Grant Premium for {duration}d

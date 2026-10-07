@@ -294,7 +294,7 @@ const Payments: React.FC = () => {
 
           {/* Boost Revenue Summary */}
           {boostsData && (
-            <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-500/5 dark:to-yellow-500/5 border border-amber-100 dark:border-amber-500/20 rounded-2xl p-6">
+            <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/25 rounded-2xl p-6">
               <div className="flex items-start gap-3">
                 <Zap size={20} className="text-amber-600 mt-0.5 shrink-0" />
                 <div>

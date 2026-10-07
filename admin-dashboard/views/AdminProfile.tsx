@@ -148,7 +148,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ auth, onUpdate, showToast }
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-teal-600 to-cyan-500 p-8 rounded-[3rem] text-white shadow-xl shadow-teal-500/20">
+          <div className="bg-emerald-700 p-6 md:p-7 rounded-2xl text-white">
             <h3 className="text-sm font-black uppercase tracking-widest mb-4">Permission Scope</h3>
             <div className="space-y-2">
               {formData.role === AdminRole.SUPER_ADMIN && (

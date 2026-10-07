@@ -153,39 +153,39 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
     {
       label: 'Active 24h',
       value: activity ? formatNumber(activity.active24h) : '—',
-      color: 'text-cyan-600 dark:text-cyan-400',
-      bg: 'bg-cyan-50 dark:bg-cyan-500/5',
-      border: 'border-cyan-100 dark:border-cyan-500/20',
+      color: 'text-emerald-700 dark:text-emerald-300',
+      bg: 'bg-emerald-50 dark:bg-emerald-500/10',
+      border: 'border-emerald-200 dark:border-emerald-500/25',
       onClick: () => openDrill('Active in Last 24 Hours', 'active_24h'),
     },
     {
       label: 'Active 7d',
       value: activity ? formatNumber(activity.active7d) : '—',
-      color: 'text-teal-600 dark:text-teal-400',
-      bg: 'bg-teal-50 dark:bg-teal-500/5',
-      border: 'border-teal-100 dark:border-teal-500/20',
+      color: 'text-emerald-700 dark:text-emerald-300',
+      bg: 'bg-emerald-50 dark:bg-emerald-500/10',
+      border: 'border-emerald-200 dark:border-emerald-500/25',
       onClick: () => openDrill('Active in Last 7 Days', 'active_7d'),
     },
     {
       label: 'Messages 24h',
       value: activity ? formatNumber(activity.messages24h) : '—',
-      color: 'text-indigo-600 dark:text-indigo-400',
-      bg: 'bg-indigo-50 dark:bg-indigo-500/5',
-      border: 'border-indigo-100 dark:border-indigo-500/20',
+      color: 'text-emerald-700 dark:text-emerald-300',
+      bg: 'bg-emerald-50 dark:bg-emerald-500/10',
+      border: 'border-emerald-200 dark:border-emerald-500/25',
       onClick: () => openDrill('Users Who Messaged (Last 24h)', 'messages_24h'),
     },
     {
       label: 'Pending Reports',
       value: stats ? String(stats.pendingReports) : '—',
-      color: 'text-rose-600 dark:text-rose-400',
+      color: 'text-rose-700 dark:text-rose-300',
       bg: 'bg-rose-50 dark:bg-rose-500/5',
-      border: 'border-rose-100 dark:border-rose-500/20',
+      border: 'border-rose-200 dark:border-rose-500/25',
       onClick: () => onNavigate?.('reports'),
     },
   ];
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 md:space-y-7 animate-fadeIn">
       <PageHeader
         title="System Overview"
         eyebrow="Live Operations"
@@ -199,7 +199,7 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
             <button
               onClick={() => fetchData(true)}
               disabled={refreshing}
-              className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 text-sm font-bold text-slate-500 dark:text-slate-400 hover:border-cyan-400 hover:text-cyan-600 transition-all"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-emerald-500 hover:text-emerald-700 transition-all"
             >
               <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />
               Refresh
@@ -221,28 +221,25 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             <StatCard
-              title="Total Citizens"
+              title="Total Users"
               value={stats ? formatNumber(stats.totalUsers) : '—'}
               icon={<Users />}
-              color="bg-cyan-500"
               onClick={() => onNavigate?.('users')}
               sublabel="View all users →"
             />
             <StatCard
-              title="Match Velocity"
+              title="Total Matches"
               value={stats ? formatNumber(stats.totalMatches) : '—'}
               icon={<Heart />}
-              color="bg-rose-500"
               onClick={() => openDrill('Users with Matches', 'has_matches')}
               sublabel="View matched users →"
             />
             <StatCard
-              title="Packet Traffic"
+              title="Total Messages"
               value={stats ? formatNumber(stats.totalMessages) : '—'}
               icon={<MessageSquare />}
-              color="bg-indigo-500"
               onClick={() => openDrill('Users Who Sent Messages', 'sent_messages')}
               sublabel="View messaging users →"
             />
@@ -250,21 +247,20 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
               title="Active Today"
               value={stats ? formatNumber(stats.activeToday) : '—'}
               icon={<TrendingUp />}
-              color="bg-teal-500"
               onClick={() => openDrill('Active Today', 'active_today')}
               sublabel="View active users →"
             />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {miniTiles.map(item => (
               <button
                 key={item.label}
                 onClick={item.onClick}
-                className={`${item.bg} border ${item.border} rounded-2xl p-5 text-left transition-all hover:opacity-80 hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer w-full`}
+                className={`${item.bg} border ${item.border} rounded-xl p-4 md:p-5 text-left transition-all hover:brightness-[0.98] focus-visible:outline-2 focus-visible:outline-emerald-500 active:scale-[0.99] cursor-pointer w-full`}
               >
-                <p className={`text-[10px] font-black uppercase tracking-widest ${item.color} mb-1`}>{item.label}</p>
-                <p className={`text-2xl font-black ${item.color}`}>{item.value}</p>
+                <p className={`text-xs font-bold uppercase tracking-wide ${item.color} mb-1`}>{item.label}</p>
+                <p className={`text-2xl font-bold ${item.color}`}>{item.value}</p>
               </button>
             ))}
           </div>
@@ -272,10 +268,10 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
           <LiveActivityFeed />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-sm border border-gray-100 dark:border-slate-800">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-900 p-5 md:p-7 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700">
               <div className="flex items-center justify-between mb-10">
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Citizen Engagement Flow</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">User Engagement</h2>
                   <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">
                     {chartData.length > 0 ? `Real data — last ${chartRange === '30d' ? '30 days' : '7 days'}` : 'No data yet'}
                   </p>
@@ -285,7 +281,7 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
                     <button
                       key={r}
                       onClick={() => setChartRange(r)}
-                      className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${chartRange === r ? 'bg-white dark:bg-slate-700 text-cyan-600 shadow-sm' : 'text-slate-400 hover:text-cyan-500'}`}
+                      className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${chartRange === r ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-300 shadow-sm' : 'text-slate-500 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-300'}`}
                     >
                       {r}
                     </button>
@@ -348,7 +344,7 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-sm border border-gray-100 dark:border-slate-800 flex flex-col">
+            <div className="bg-white dark:bg-slate-900 p-5 md:p-7 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 flex flex-col">
               <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Security Alerts</h2>
                 <p className="text-xs text-rose-500 font-bold uppercase tracking-widest">
@@ -357,7 +353,7 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
               </div>
               <div className="flex-1 space-y-4">
                 {reportsUsers.length > 0 ? reportsUsers.map((report: any) => (
-                  <div key={report._id} className="group flex items-center justify-between p-5 rounded-3xl bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-800 hover:border-rose-500/30 transition-all cursor-pointer">
+                  <div key={report._id} className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700">
                     <div className="flex items-center">
                       <div className="relative">
                         <div className="h-12 w-12 rounded-2xl bg-rose-100 dark:bg-rose-500/20 flex items-center justify-center mr-4">
@@ -370,7 +366,7 @@ const DashboardHome: React.FC<Props> = ({ onNavigate }) => {
                         <p className="text-[10px] text-rose-500 font-black uppercase tracking-wider">{report.reason || 'Reported'}</p>
                       </div>
                     </div>
-                    <AlertCircle size={18} className="text-slate-300 group-hover:text-rose-500 transition-colors" />
+                    <AlertCircle size={18} className="text-rose-500" aria-hidden="true" />
                   </div>
                 )) : (
                   <EmptyState

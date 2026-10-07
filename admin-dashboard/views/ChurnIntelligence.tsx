@@ -102,7 +102,7 @@ const ChurnIntelligence: React.FC<ChurnIntelligenceProps> = ({ showToast }) => {
       </div>
 
       {/* How it works */}
-      <div className="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-500/5 dark:to-cyan-500/5 border border-teal-100 dark:border-teal-500/20 rounded-2xl p-5">
+      <div className="bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/25 rounded-2xl p-5">
         <div className="flex items-start gap-3">
           <Zap size={18} className="text-teal-600 dark:text-teal-400 mt-0.5 shrink-0" />
           <div>
@@ -218,7 +218,7 @@ const ChurnIntelligence: React.FC<ChurnIntelligenceProps> = ({ showToast }) => {
                         <tr key={u._id} className={`border-b border-gray-50 dark:border-slate-800 hover:bg-gray-50/50 dark:hover:bg-slate-800/30 transition-colors ${i === topChurners.length - 1 ? 'border-b-0' : ''}`}>
                           <td className="px-5 py-4">
                             <div className="flex items-center gap-3">
-                              <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center text-white text-xs font-black shrink-0">
+                              <div className="h-8 w-8 rounded-xl bg-emerald-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
                                 {u.name.charAt(0)}
                               </div>
                               <div>

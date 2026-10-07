@@ -232,9 +232,6 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ onNavigate }) =
                 </div>
               )}
             </div>
-            {items.length > 3 && (
-              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white dark:from-slate-900 to-transparent rounded-b-[2rem]" />
-            )}
           </div>
 
           {items.length > 0 && (

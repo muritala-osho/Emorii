@@ -314,7 +314,7 @@ const Broadcasts: React.FC<BroadcastsProps> = ({ showToast }) => {
               <Star size={40} className="text-brand-400 group-hover:rotate-45 transition-transform duration-700" />
             </div>
             <h4 className="text-[10px] font-black uppercase tracking-[0.2em] mb-3 text-brand-400">Optimization Tip</h4>
-            <p className="text-xs font-medium opacity-80 leading-relaxed">Notifications with <span className="text-brand-400 font-bold">emojis</span> in the headline see a <span className="font-bold">22% higher</span> engagement rate. Schedule for <span className="text-brand-400 font-bold">7–9 PM local time</span> for peak opens.</p>
+            <p className="text-xs font-medium opacity-80 leading-relaxed">Keep headlines specific and concise. Schedule for <span className="text-brand-400 font-bold">7–9 PM local time</span> for peak opens.</p>
           </div>
         </div>
 
@@ -463,11 +463,10 @@ const Broadcasts: React.FC<BroadcastsProps> = ({ showToast }) => {
         </div>
 
         <div className="lg:col-span-4 bg-slate-900 p-10 rounded-[3.5rem] flex flex-col items-center justify-center space-y-8 relative overflow-hidden group shadow-2xl border border-white/5">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(20,184,166,0.1),transparent)]" />
           <h3 className="text-[10px] font-black text-teal-500 uppercase tracking-[0.3em] relative z-10">Real-Time User Experience</h3>
           <div className="w-72 h-[520px] bg-black rounded-[3rem] border-[8px] border-slate-800 relative shadow-2xl z-10 p-3 ring-1 ring-white/10">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-28 bg-slate-800 rounded-b-2xl" />
-            <div className="h-full w-full rounded-[2.25rem] overflow-hidden bg-gradient-to-b from-slate-700 to-slate-900 p-4 flex flex-col pt-12 relative">
+            <div className="h-full w-full rounded-[2.25rem] overflow-hidden bg-slate-800 p-4 flex flex-col pt-12 relative">
               <div className="bg-white/10 backdrop-blur-2xl border border-white/10 p-4 rounded-3xl animate-fadeIn shadow-2xl relative z-10">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="h-5 w-5 bg-teal-500 rounded-lg flex items-center justify-center text-white text-[8px] font-black shadow-lg">A</div>

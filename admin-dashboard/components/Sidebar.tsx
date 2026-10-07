@@ -46,7 +46,7 @@ const EmoriiLogo = () => {
   const [errored, setErrored] = React.useState(false);
   if (errored) {
     return (
-      <div style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg,#0f766e,#14b8a6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: 52, height: 52, borderRadius: 14, background: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <span style={{ color: '#fff', fontSize: 22, fontWeight: 900, lineHeight: 1 }}>E</span>
       </div>
     );
@@ -87,22 +87,24 @@ const SidebarContent: React.FC<SidebarProps & { onNavClick: (id: string) => void
 
   return (
     <>
-      <div
-        className="flex items-center gap-3 px-4 py-5 border-b border-white/[0.06] cursor-pointer group"
+      <button
+        type="button"
+        className="flex items-center gap-3 px-4 py-5 border-b border-white/[0.10] cursor-pointer group text-left text-white w-full"
         onClick={() => onNavClick('dashboard')}
+        aria-label="Go to dashboard"
       >
         <div className="shrink-0 group-hover:scale-105 transition-transform duration-200">
           <EmoriiLogo />
         </div>
         <div>
           <span className="text-[16px] font-black tracking-tight leading-none block">
-            Emo<span className="text-teal-400">rii</span>
+            Emo<span className="text-emerald-400">rii</span>
           </span>
-          <span className="text-[9px] font-black text-teal-500/50 uppercase tracking-[0.18em] mt-0.5 block">
-            Admin Portal
+          <span className="text-[11px] font-bold text-emerald-200/80 uppercase tracking-[0.12em] mt-1 block">
+            Operations
           </span>
         </div>
-      </div>
+      </button>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar py-3">
         {SECTION_GROUPS.map(group => {
@@ -114,7 +116,7 @@ const SidebarContent: React.FC<SidebarProps & { onNavClick: (id: string) => void
             <div key={group.label} className="mb-1">
               <button
                 onClick={() => toggleSection(group.label)}
-                className="flex items-center justify-between w-full px-4 py-2 text-[9px] font-black text-teal-500/60 uppercase tracking-[0.18em] hover:text-teal-400 transition-colors"
+                className="flex items-center justify-between w-full px-4 py-2.5 text-[11px] font-bold text-emerald-200/75 uppercase tracking-[0.14em] hover:text-emerald-100 transition-colors"
                 aria-expanded={!isCollapsed}
               >
                 {group.label}
@@ -137,12 +139,12 @@ const SidebarContent: React.FC<SidebarProps & { onNavClick: (id: string) => void
                         aria-current={isActive ? 'page' : undefined}
                         className={`flex items-center justify-between w-full py-2.5 text-sm rounded-xl transition-all duration-200 group/item border-l-2 ${
                           isActive
-                            ? 'bg-gradient-to-r from-teal-400/20 via-teal-400/8 to-transparent text-white font-bold border-teal-400 pl-[10px] pr-3'
-                            : 'text-teal-100/60 hover:bg-white/[0.06] hover:text-teal-100 font-medium border-transparent pl-[10px] pr-3'
+                            ? 'bg-emerald-500/20 text-white font-bold border-emerald-400 pl-[10px] pr-3'
+                            : 'text-slate-200/80 hover:bg-white/[0.07] hover:text-white font-medium border-transparent pl-[10px] pr-3'
                         }`}
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <span className={`shrink-0 transition-colors ${isActive ? 'text-teal-300' : 'text-teal-500/50 group-hover/item:text-teal-400/80'}`}>
+                          <span className={`shrink-0 transition-colors ${isActive ? 'text-emerald-300' : 'text-slate-300/65 group-hover/item:text-emerald-300'}`}>
                             {item.icon}
                           </span>
                           <span className="truncate text-[13px]">{item.label}</span>
@@ -184,7 +186,7 @@ const SidebarContent: React.FC<SidebarProps & { onNavClick: (id: string) => void
             <p className="text-[13px] font-bold text-white/90 truncate group-hover:text-teal-300 transition-colors leading-tight">
               {adminName}
             </p>
-            <p className="text-[9px] text-teal-500/50 font-black uppercase tracking-widest leading-tight mt-0.5">
+            <p className="text-[11px] text-emerald-200/75 font-bold uppercase tracking-wide leading-tight mt-1">
               {adminRole}
             </p>
           </div>
@@ -192,7 +194,7 @@ const SidebarContent: React.FC<SidebarProps & { onNavClick: (id: string) => void
 
         <button
           onClick={onLogout}
-          className="flex items-center w-full px-3 py-2 text-[12px] font-semibold text-teal-100/30 hover:text-rose-400 hover:bg-rose-500/[0.06] rounded-xl transition-all group"
+          className="flex items-center w-full px-3 py-2.5 text-[13px] font-semibold text-slate-200/80 hover:text-rose-300 hover:bg-rose-500/[0.10] rounded-xl transition-all group"
         >
           <LogOut size={13} className="mr-2 group-hover:-translate-x-0.5 transition-transform" />
           Sign out
@@ -224,7 +226,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
         aria-label="Main navigation"
         className={`
           fixed md:static inset-y-0 left-0 z-50
-          flex flex-col h-screen w-[220px] bg-gradient-to-b from-[#092e2b] via-[#0d3d38] to-[#0c3834] text-white shrink-0 border-r border-black/20 select-none
+          flex flex-col h-[100dvh] w-[240px] bg-[#102C2A] text-white shrink-0 border-r border-black/20 select-none
           transition-transform duration-300 ease-in-out
           ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}

@@ -1,20 +1,18 @@
 :root {
-  --bg-primary: #0f0f23;
-  --bg-secondary: #1a1a2e;
-  --bg-card: #16213e;
-  --bg-surface: #1e2a45;
-  --text-primary: #e8e8f0;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
-  --accent: #14b8a6;
-  --accent-light: #2dd4bf;
-  --accent-bg: rgba(20, 184, 166, 0.1);
-  --border: #2a2a4a;
+  --bg-primary: #0D1117;
+  --bg-secondary: #161B22;
+  --bg-card: #161B22;
+  --bg-surface: #21262D;
+  --text-primary: #E6EDF3;
+  --text-secondary: #A0AAB5;
+  --text-muted: #8693A1;
+  --accent: #10B981;
+  --accent-light: #34D399;
+  --accent-bg: rgba(16, 185, 129, 0.12);
+  --border: #30363D;
   --danger: #ef4444;
   --warning: #f59e0b;
   --success: #10b981;
-  --gradient-start: #14b8a6;
-  --gradient-end: #06b6d4;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   --radius: 12px;
   --radius-sm: 8px;
@@ -117,7 +115,7 @@ body {
 }
 
 .sidebar nav li.active a {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  background: var(--accent);
   color: white;
   font-weight: 600;
   box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
@@ -304,7 +302,7 @@ header {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  background: var(--accent);
 }
 
 .stat-card:hover {
@@ -438,7 +436,7 @@ select:focus, .input-sm:focus {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  background: var(--accent);
   color: white;
   border: none;
   padding: 10px 24px;
@@ -593,7 +591,7 @@ select:focus, .input-sm:focus {
 
 .progress {
   height: 100%;
-  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  background: var(--accent);
   border-radius: 4px;
   transition: width 0.5s;
 }
@@ -944,7 +942,7 @@ select:focus, .input-sm:focus {
 
 .login-btn {
   width: 100%;
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  background: var(--accent);
   color: white;
   border: none;
   padding: 14px 24px;

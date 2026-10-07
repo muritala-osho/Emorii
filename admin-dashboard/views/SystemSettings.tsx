@@ -94,18 +94,18 @@ const SystemSettings: React.FC<SystemSettingsProps> = ({ showToast }) => {
         <button 
           onClick={save}
           disabled={isSaving}
-          className="flex items-center px-10 py-5 bg-teal-600 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] hover:bg-teal-700 transition-all shadow-2xl shadow-teal-500/30 disabled:opacity-50"
+          className="flex items-center px-6 py-3.5 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-700 transition-all disabled:opacity-50"
         >
           {isSaving ? <RefreshCw size={16} className="mr-3 animate-spin" /> : <Save size={16} className="mr-3" />}
-          Synchronize Core
+          Save Settings
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-8">
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 p-5 md:p-7 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm">
             <h3 className="text-lg font-bold mb-8 dark:text-white flex items-center">
-              <Zap size={20} className="mr-3 text-cyan-500" /> Platform Toggles
+              <Zap size={20} className="mr-3 text-emerald-600 dark:text-emerald-400" /> Platform Toggles
             </h3>
             <div className="space-y-8">
               {[
@@ -135,7 +135,7 @@ const SystemSettings: React.FC<SystemSettingsProps> = ({ showToast }) => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 p-5 md:p-7 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm">
              <h3 className="text-lg font-bold mb-8 dark:text-white flex items-center">
               <Key size={20} className="mr-3 text-amber-500" /> Security Thresholds
             </h3>
@@ -170,9 +170,9 @@ const SystemSettings: React.FC<SystemSettingsProps> = ({ showToast }) => {
         </div>
 
         <div className="space-y-8">
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] border border-gray-100 dark:border-slate-800 shadow-sm">
+           <div className="bg-white dark:bg-slate-900 p-5 md:p-7 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm">
             <h3 className="text-lg font-bold mb-8 dark:text-white flex items-center">
-              <Globe size={20} className="mr-3 text-indigo-500" /> Regional Compliance
+              <Globe size={20} className="mr-3 text-emerald-600 dark:text-emerald-400" /> Regional Compliance
             </h3>
             <div className="space-y-8">
                <div>
@@ -241,13 +241,12 @@ const SystemSettings: React.FC<SystemSettingsProps> = ({ showToast }) => {
 
           <div className={`p-10 rounded-[3rem] text-white shadow-2xl relative overflow-hidden group transition-all duration-500 ${
             killSwitchActive
-              ? 'bg-gradient-to-br from-emerald-600 to-emerald-400 shadow-emerald-500/40'
-              : 'bg-gradient-to-br from-rose-600 to-rose-400 shadow-rose-500/40'
+              ? 'bg-emerald-700'
+              : 'bg-rose-700'
           }`}>
-            <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-4">
-                <AlertTriangle size={24} className={killSwitchActive ? '' : 'animate-bounce'} />
+                <AlertTriangle size={24} />
                 <h3 className="text-xl font-black uppercase tracking-widest">
                   {killSwitchActive ? 'Platform in Maintenance' : 'Panic Switch'}
                 </h3>

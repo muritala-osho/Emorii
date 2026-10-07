@@ -290,10 +290,10 @@ const SupportDesk: React.FC<SupportDeskProps> = ({ showToast }) => {
       </div>
 
       {/* Main layout: list + thread */}
-      <div className="flex h-[calc(100vh-300px)] min-h-[500px] gap-6">
+      <div className="flex flex-col md:flex-row h-auto md:h-[calc(100dvh-300px)] min-h-[600px] gap-4 md:gap-6">
 
         {/* Ticket list */}
-        <div className="w-80 shrink-0 flex flex-col gap-3 overflow-hidden">
+        <div className="w-full md:w-80 md:shrink-0 flex flex-col gap-3 overflow-hidden h-[300px] md:h-full">
           <div className="relative">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
@@ -370,7 +370,7 @@ const SupportDesk: React.FC<SupportDeskProps> = ({ showToast }) => {
         </div>
 
         {/* Message thread */}
-        <div className="flex-1 min-w-0 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 flex flex-col shadow-sm" style={{ overflow: 'visible' }}>
+        <div className="flex-1 min-w-0 min-h-[480px] bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex flex-col shadow-sm" style={{ overflow: 'visible' }}>
           {!selectedTicket ? (
             <div className="flex-1 flex flex-col items-center justify-center p-12 text-center opacity-40">
               <div className="p-8 bg-gray-50 dark:bg-slate-800 rounded-full mb-6">
@@ -520,7 +520,7 @@ const SupportDesk: React.FC<SupportDeskProps> = ({ showToast }) => {
                               {msg.senderName || msg.adminName || (msg.role === 'agent' ? 'Agent' : 'Admin')}
                             </span>
                             <div className={`h-5 w-5 rounded-lg flex items-center justify-center text-[9px] font-black ${isBot ? 'bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-400' : 'bg-teal-100 dark:bg-teal-500/20 text-teal-700 dark:text-teal-400'}`}>
-                              {isBot ? '🤖' : msg.role === 'agent' ? 'AG' : 'AD'}
+                              {isBot ? 'BOT' : msg.role === 'agent' ? 'AG' : 'AD'}
                             </div>
                           </div>
                         )}

@@ -203,7 +203,7 @@ const IceBreakers: React.FC<Props> = ({ showToast }) => {
             </div>
             <div className="flex justify-end gap-2 px-5 py-4 border-t border-gray-200 dark:border-gray-700">
               <button onClick={cancel} className="px-4 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Cancel</button>
-              <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium disabled:opacity-60">
+              <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium disabled:opacity-60">
                 {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />} Save
               </button>
             </div>

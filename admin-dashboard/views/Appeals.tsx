@@ -55,7 +55,7 @@ const AppealCard: React.FC<AppealCardProps> = ({ appeal, onReview, theme }) => {
       <div className="p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center text-white font-black text-lg shrink-0">
+            <div className="h-11 w-11 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
               {appeal.name.charAt(0).toUpperCase()}
             </div>
             <div>

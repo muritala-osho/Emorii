@@ -221,7 +221,7 @@ const ContentModeration: React.FC<Props> = ({ showToast }) => {
                 )}
                 {item.status !== 'pending' && (
                   <div className={`text-center py-2.5 rounded-xl text-xs font-bold ${statusColors[item.status]}`}>
-                    {item.status === 'approved' ? '✓ Dismissed' : '✗ Action Taken'}
+                    {item.status === 'approved' ? 'Dismissed' : 'Action Taken'}
                   </div>
                 )}
               </div>
